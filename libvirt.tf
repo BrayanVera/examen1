@@ -13,12 +13,11 @@ data "template_file" "user_data" {
 }
 
 # Use CloudInit to add the instance
-resource "libvirt_cloudinit_disk" "commoninit" {
-  name = "commoninit.iso"
-  pool = "default" # List storage pools using virsh pool-list
-  user_data = "${data.template_file.user_data.rendered}"
-  #ser_data = "data.template_file.user_data.rendered"
-}
+#resource "libvirt_cloudinit_disk" "commoninit" {
+#  name = "commoninit.iso"
+#  pool = "default" # List storage pools using virsh pool-list
+#  user_data = "${data.template_file.user_data.rendered}"
+#}
 
 # Define KVM domain to create
 resource "libvirt_domain" "xenial" {
@@ -35,7 +34,7 @@ resource "libvirt_domain" "xenial" {
     volume_id = "${libvirt_volume.xenial-qcow2.id}"
   }
 
-  cloudinit = "${libvirt_cloudinit_disk.commoninit.id}"
+ # cloudinit = "${libvirt_cloudinit_disk.commoninit.id}"
 
   console {
     type = "pty"
